@@ -16,7 +16,7 @@ class GameScene: SKScene {
     let whiteBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 100, height: 100))
     
     override func didMove(to view: SKView) {
-        // MARK: - Nodes (Sprites)
+        // MARK: - SKSpriteNode / SKNode
         
         addChild(self.myFirstNode)
         
@@ -35,9 +35,20 @@ class GameScene: SKScene {
         self.whiteBox.position = CGPoint(x: self.myFirstSpriteNode.size.width / 2, y: self.myFirstSpriteNode.size.height / 2)
         self.myFirstSpriteNode.addChild(self.whiteBox)
         
-        // MARK: - Physics
+        // MARK: - SKPhysics
         
+        // Change Gravity
+        physicsWorld.gravity = CGVector(dx: -1.0, dy: -2.0)
         
+        // Add ground (screen bottom edge)
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
+        // add physic to a node
+        myFirstTexturedNode.physicsBody = SKPhysicsBody(circleOfRadius: myFirstTexturedNode.size.width / 2)
+        whiteBox.physicsBody = SKPhysicsBody(rectangleOf: whiteBox.size)
+        
+        // Increase bounce effect (max 1.0)
+        whiteBox.physicsBody?.restitution = 1.0
     }
     
     // MARK: - SKAction
